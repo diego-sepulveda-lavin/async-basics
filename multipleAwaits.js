@@ -37,7 +37,7 @@ const test = async () => {
 	console.log(one);
 };
 
-//test();
+//test(); // Prints "Now" and after a second prints "1"
 
 // Now let’s say you need to wait for three promises. Each promise has a one-second delay.
 const getTwo = () => {
@@ -55,15 +55,17 @@ const getFour = () => {
     This is not good because we forced JavaScript to wait two extra seconds before doing what we need to do.
 */
 const testThreePromises = async () => {
+	console.time("Time");
 	const two = await getTwo();
 	console.log(two);
 	const three = await getThree();
 	console.log(three);
 	const four = await getFour();
 	console.log(four);
+	console.timeEnd("Time");
 };
 
-//testThreePromises(); // takes 3 seconds to finish
+//testThreePromises(); // takes 3 seconds to finish because has to wait for each promise
 
 /* 
     If getTwo , getThree and getFour can be fetched simultaneously, you’ll save two seconds. 
@@ -77,11 +79,13 @@ const testThreePromises = async () => {
 */
 
 const testThreePromisesAll = async () => {
+	console.time("Time");
 	const promises = [getTwo(), getThree(), getFour()];
 	console.log("Now");
 	const [two, three, four] = await Promise.all(promises);
 	console.log(two, three, four);
 	console.log("Done");
+	console.timeEnd("Time");
 };
 
-testThreePromisesAll();
+testThreePromisesAll(); // takes 1 second to end because the promises are handled simultaneously
