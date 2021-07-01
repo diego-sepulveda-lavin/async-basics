@@ -64,15 +64,16 @@ const control2 = async () => {
 	const promises = [
 		getNumFruitDelayed("apple"),
 		getNumFruitDelayed("grape"),
-		getNumFruitDelayed("pear"),
+		getNumFruitDelayed("pear"), //we force the Failure and everything else Fails
 	];
-	const [apple, grape, pear] = await Promise.all(promises);
-	console.log(apple, grape, pear);
-
+	const result = await Promise.all(promises);
+	console.log(result);
+	const status = await Promise.allSettled(result);
+	console.log(status);
 	console.log("End");
 };
 
-//control2(); // prints all the values in 1 seconds, because promises are treated simultaneously
+control2(); // prints all the values in 1 seconds, because promises are treated simultaneously
 
 // Await in a for loop
 /* 
@@ -190,4 +191,4 @@ const mapLoop = async () => {
 	console.log("End");
 };
 
-mapLoop(); //This works as long as you use Promise.all due numFruits is an array of promises
+//mapLoop(); //This works as long as you use Promise.all due numFruits is an array of promises
